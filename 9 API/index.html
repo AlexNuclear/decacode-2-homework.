@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Breweries</title>
+    <style>
+    </style>
+  </head>
+  <body>
+
+    <div>
+      <form id="form" action="">
+        <h1>Получить список пивоварен:</h1>
+        <b>Введите название пивоварни</b>
+        <input required type="text" name="" value="">
+        <button type="submit">получить</button>
+      </form>
+      <ul id="list">
+
+      </ul>
+    </div>
+
+    <script type="text/javascript">
+
+
+        let list = document.querySelector('#list')
+        let $form = document.querySelector('#form')
+
+
+          $form.addEventListener('submit',(event) => {
+            event.preventDefault();
+            let inputValue = $form.querySelector('input[type="text"]').value;
+            console.log(inputValue)
+            fetch('https://api.openbrewerydb.org/breweries?by_name='+ inputValue)
+            .then((response) => {
+            return response.json();
+            }).then(data => {
+              const $breweries = data.map(brewery => {
+                const $elements = document.createElement('li');
+                $elements.textContent = brewery.name;;
+                return $elements;
+              })
+              $breweries.forEach($element => {
+                list.append($element)
+              })
+            });
+          })
+
+
+
+
+
+    </script>
+  </body>
+</html>
+
+<!-- (() => {
+
+})(); -->
